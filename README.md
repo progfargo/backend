@@ -1,8 +1,9 @@
-# simple backend
+# sample backend
+
 backend with most common components like; translation, user and role management, text and tabulated content etc.
 
-you may enrich the app with adding new modules following source code behaviour in existing modules.
+you may enrich the app by adding new modules following the source code behaviour in existing modules.
 
-css file is compiled by the app itself when you change one of the less files.
+css file is compiled by the app itself when you change one of the less files if the app is in debug mode.
 
 translation units are collected from the source code by sync function.
