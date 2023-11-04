@@ -17,7 +17,6 @@ import (
 	"backend/src/page/banner"
 	"backend/src/page/category"
 	"backend/src/page/config"
-	"backend/src/page/copyright"
 	"backend/src/page/faq"
 	"backend/src/page/help"
 	"backend/src/page/help_image"
@@ -36,7 +35,6 @@ import (
 	"backend/src/page/role"
 	"backend/src/page/site_error"
 	"backend/src/page/social"
-	"backend/src/page/terms_of_use"
 	"backend/src/page/text_content"
 	"backend/src/page/text_content_image"
 	"backend/src/page/tran"
@@ -224,9 +222,6 @@ func main() {
 	http.HandleFunc("/office_make_main", makeHandle(office.MakeMainOffice))
 	http.HandleFunc("/office_delete", makeHandle(office.Delete))
 	http.HandleFunc("/office_display", makeHandle(office.Display))
-
-	http.HandleFunc("/copyright", makeHandle(copyright.Browse))
-	http.HandleFunc("/terms_of_use", makeHandle(terms_of_use.Browse))
 
 	http.HandleFunc("/", makeHandle(login.Browse))
 
