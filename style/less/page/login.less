@@ -1,0 +1,27 @@
+@import "../lib/vars.less";
+
+body#loginPage {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.85;
+    transition: background 2s;
+
+    main {
+        margin: 0;
+        padding: 5vh 0 0 0;
+
+        .backgroundIdList {
+            display: none;
+        }
+    }
+}
+
+/* Middle Size Devices, Tablets */
+@media only screen and (min-width: @screenMd) {
+    body#loginPage {
+        main {
+            padding-left: 0;
+        }
+    }
+}

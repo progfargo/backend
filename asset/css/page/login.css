@@ -1,0 +1,20 @@
+body#loginPage {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  opacity: 0.85;
+  transition: background 2s;
+}
+body#loginPage main {
+  margin: 0;
+  padding: 5vh 0 0 0;
+}
+body#loginPage main .backgroundIdList {
+  display: none;
+}
+/* Middle Size Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  body#loginPage main {
+    padding-left: 0;
+  }
+}

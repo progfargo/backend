@@ -1,0 +1,17 @@
+p {
+    margin: 0.7rem 0;
+    font-size: 1rem;
+}
+
+ul,
+ol {
+    font-size: 1rem;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}

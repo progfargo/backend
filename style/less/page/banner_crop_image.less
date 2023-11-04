@@ -1,0 +1,29 @@
+@import "../lib/vars.less";
+
+body#bannerCropImagePage {
+
+    .imgInfo {
+        .infoTitle {
+            font-weight: 700;
+        }
+
+        .dimention {
+            color: @success;
+            font-weight: 700;
+        }
+
+        .invalidDim {
+            color: @error;
+        }
+    }
+
+    .imgWidth,
+    .imgHeight {
+        display: none;
+    }
+
+    button[type='submit']:disabled {
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+}

@@ -1,0 +1,13 @@
+<div class="siteMessage">
+	{{if .message}}
+		<div class="row">
+			<div class="col">
+				{{.message | raw}}
+			</div>
+		</div>
+	{{end}}
+</div>
+
+{{if .midContent}}
+			{{.midContent | raw}}
+{{end}}
