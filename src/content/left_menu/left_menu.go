@@ -60,8 +60,6 @@ func (lm *leftMenu) Set(ctx *context.Ctx, name ...string) {
 	lm.Add("text_content", "content", 60, ctx.IsRight("text_content", "browse"), ctx.U("/text_content"), ctx.T("Text Content"), "fas fa-file-lines")
 
 	lm.Add("site_error", "root", 80, ctx.IsRight("site_error", "browse"), ctx.U("/site_error"), ctx.T("Site Errors"), "fas fa-bug")
-	lm.Add("copyright", "root", 90, ctx.IsRight("copyright", "browse"), ctx.U("/copyright"), ctx.T("Copyright"), "")
-	lm.Add("privacy_policy", "root", 100, ctx.IsRight("privacy_policy", "browse"), ctx.U("/privacy_policy"), ctx.T("Privacy Policy"), "")
 
 	if len(name) > 1 {
 		panic("wrong number of parameters.")
