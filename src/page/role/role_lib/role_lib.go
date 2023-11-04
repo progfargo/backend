@@ -274,10 +274,5 @@ func SetRoleRightList(ctx *context.Ctx) {
 	tab.Add(app.NewRight("machine", "delete", ctx.T("Can delete own machine records.")))
 	rl.Add("machine", tab)
 
-	//copyright
-	tab = app.NewRightTab("Privacy Policy")
-	tab.Add(app.NewRight("privacy_policy", "browse", ctx.T("Can browse privacy policy text.")))
-	rl.Add("privacy_policy", tab)
-
 	app.UserRightMap = app.UserRightList.GetRightMap() //to set AppRightMap
 }

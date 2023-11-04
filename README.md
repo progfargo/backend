@@ -1,4 +1,4 @@
-# sample backend app
+# sample backend app with golang
 
 backend with most common components like; translation, user and role management, text and tabulated content etc.
 
