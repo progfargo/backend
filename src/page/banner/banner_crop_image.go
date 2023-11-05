@@ -59,6 +59,12 @@ func CropImage(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/banner"))
+		return
+	}
+
 	xStr := ctx.Req.PostFormValue("x[]")
 	x, err := strconv.ParseInt(xStr, 10, 64)
 	if err != nil {

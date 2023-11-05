@@ -56,6 +56,12 @@ func UpdatePass(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/user", "key", "pn", "rid", "stat"))
+		return
+	}
+
 	password := ctx.Req.PostFormValue("password")
 
 	if password == "" {

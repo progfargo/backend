@@ -51,6 +51,12 @@ func Insert(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/help_image", "helpId", "key", "pn"))
+		return
+	}
+
 	err = ctx.Req.ParseMultipartForm(1024 * 1024 * 2)
 	if err != nil {
 		panic(err)
@@ -189,10 +195,10 @@ func insertForm(ctx *context.Ctx) {
 	content.Include(ctx)
 
 	lmenu := left_menu.New()
-	lmenu.Set(ctx, "help")
+	lmenu.Set(ctx)
 
 	tmenu := top_menu.New()
-	tmenu.Set(ctx)
+	tmenu.Set(ctx, "help")
 
 	ctx.Render("default.html")
 }

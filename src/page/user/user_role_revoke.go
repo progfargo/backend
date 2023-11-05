@@ -25,6 +25,12 @@ func UserRoleRevoke(rw http.ResponseWriter, req *http.Request) {
 	ctx.Cargo.AddStr("stat", "default")
 	ctx.ReadCargo()
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/user", "key", "pn", "rid", "stat"))
+		return
+	}
+
 	userId := ctx.Cargo.Int("userId")
 	roleId := ctx.Cargo.Int("roleId")
 

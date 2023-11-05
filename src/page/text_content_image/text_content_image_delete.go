@@ -34,7 +34,7 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.Msg.Warning(ctx.T("Record could not be found."))
-			ctx.Redirect(ctx.U("/text_content_image", "imgId", "key", "pn", "stat"))
+			ctx.Redirect(ctx.U("/text_content_image", "textId", "key", "pn", "stat"))
 			return
 		}
 
@@ -43,6 +43,12 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 
 	if ctx.Cargo.Str("confirm") != "yes" {
 		deleteConfirm(ctx, rec)
+		return
+	}
+
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/text_content_image", "textId", "key", "pn", "stat"))
 		return
 	}
 

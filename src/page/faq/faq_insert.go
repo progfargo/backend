@@ -20,12 +20,18 @@ func Insert(rw http.ResponseWriter, req *http.Request) {
 		app.BadRequest()
 	}
 
-		ctx.Cargo.AddStr("key", "")
-		ctx.Cargo.AddInt("pn", 1)
+	ctx.Cargo.AddStr("key", "")
+	ctx.Cargo.AddInt("pn", 1)
 	ctx.ReadCargo()
 
 	if ctx.Req.Method == "GET" {
 		insertForm(ctx)
+		return
+	}
+
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/faq", "key", "pn"))
 		return
 	}
 
@@ -94,7 +100,6 @@ func insertForm(ctx *context.Ctx) {
 	buf.Add(content.PageTitle(ctx.T("Faq"), ctx.T("New Record")))
 	buf.Add("</div>")
 
-	
 	buf.Add("<div class=\"col\">")
 	buf.Add("<div class=\"buttonGroupFixed\">")
 	buf.Add(content.BackButton(ctx, ctx.U("/faq", "key", "pn")))

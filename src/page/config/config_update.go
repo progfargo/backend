@@ -45,6 +45,12 @@ func Update(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/config"))
+		return
+	}
+
 	enum, err := strconv.ParseInt(ctx.Req.PostFormValue("enum"), 10, 64)
 	if err != nil {
 		enum = 0

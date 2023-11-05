@@ -43,6 +43,12 @@ func Set(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/text_content"))
+		return
+	}
+
 	exp := ctx.Req.PostFormValue("exp")
 	body := ctx.Req.PostFormValue("body")
 

@@ -45,6 +45,12 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/help_image", "helpId", "key", "pn"))
+		return
+	}
+
 	tx, err := app.Db.Begin()
 	if err != nil {
 		panic(err)
@@ -130,10 +136,10 @@ func deleteConfirm(ctx *context.Ctx, rec *help_image_lib.HelpImageRec) {
 	content.Include(ctx)
 
 	lmenu := left_menu.New()
-	lmenu.Set(ctx, "help")
+	lmenu.Set(ctx)
 
 	tmenu := top_menu.New()
-	tmenu.Set(ctx)
+	tmenu.Set(ctx, "help")
 
 	ctx.Render("default.html")
 }

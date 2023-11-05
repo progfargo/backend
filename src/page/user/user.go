@@ -86,7 +86,6 @@ func browseMid(ctx *context.Ctx) {
 	updatePassRight := ctx.IsRight("user", "update_pass")
 	deleteRight := ctx.IsRight("user", "delete")
 	roleBrowseRight := ctx.IsRight("user", "role_browse")
-	selectRight := ctx.IsRight("user", "select_right")
 
 	buf := util.NewBuf()
 
@@ -130,7 +129,7 @@ func browseMid(ctx *context.Ctx) {
 
 	urlStr := ctx.U("/user")
 	buf.Add("<a href=\"%s\" class=\"button buttonDefault buttonSm\" title=\"%s\">%s</a>",
-		urlStr, ctx.T("Reset all filters."), ctx.T("Clear"))
+		urlStr, ctx.T("Reset all filters."), ctx.T("Clear Filter"))
 
 	buf.Add("</div>")
 	buf.Add("</div>")
@@ -196,12 +195,6 @@ func browseMid(ctx *context.Ctx) {
 			if updateRight || roleBrowseRight || updatePassRight || deleteRight {
 				buf.Add("<td class=\"right\">")
 				buf.Add("<div class=\"buttonGroupFlex\">")
-
-				if selectRight {
-					urlStr = ctx.U("/user_select", "userId", "key", "pn", "rid", "stat")
-					buf.Add("<a href=\"%s\" class=\"button buttonDefault buttonXs\" title=\"%s\">%s</a>",
-						urlStr, ctx.T("Select effective user."), ctx.T("Select"))
-				}
 
 				if updateRight {
 					urlStr = ctx.U("/user_update", "userId", "key", "pn", "rid", "stat")

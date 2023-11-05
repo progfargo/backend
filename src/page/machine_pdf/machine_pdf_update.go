@@ -72,6 +72,12 @@ func UpdatePdf(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/machine_pdf", "machineId", "key", "stat", "pn", "catId", "manId"))
+		return
+	}
+
 	err = ctx.Req.ParseMultipartForm(1024 * 1024 * 4)
 	if err != nil {
 		panic(err)

@@ -43,12 +43,6 @@ func UpdateImageInfo(rw http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 
-	if !ctx.IsRight("machine", "update") {
-		ctx.Msg.Error(ctx.T("You don't have right to access this record."))
-		ctx.Redirect(ctx.U("/machine", "key", "stat", "pn", "catId", "manId"))
-		return
-	}
-
 	imgId := ctx.Cargo.Int("imgId")
 	imgRec, err := machine_image_lib.GetMachineImageRec(imgId)
 	if err != nil {
@@ -63,6 +57,12 @@ func UpdateImageInfo(rw http.ResponseWriter, req *http.Request) {
 
 	if ctx.Req.Method == "GET" {
 		updateImageInfoForm(ctx, machineRec, imgRec)
+		return
+	}
+
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/machine_image", "machineId"))
 		return
 	}
 

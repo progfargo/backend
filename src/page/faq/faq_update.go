@@ -44,6 +44,12 @@ func Update(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/faq", "key", "pn"))
+		return
+	}
+
 	question := ctx.Req.PostFormValue("question")
 	summary := ctx.Req.PostFormValue("summary")
 	answer := ctx.Req.PostFormValue("answer")

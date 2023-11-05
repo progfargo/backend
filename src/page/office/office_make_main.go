@@ -21,6 +21,12 @@ func MakeMainOffice(rw http.ResponseWriter, req *http.Request) {
 	ctx.Cargo.AddInt("productionId", -1)
 	ctx.ReadCargo()
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/office"))
+		return
+	}
+
 	productionId := ctx.Cargo.Int("productionId")
 	rec, err := office_lib.GetOfficeRec(productionId)
 	if err != nil {

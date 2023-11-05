@@ -48,6 +48,12 @@ func RoleRight(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/role"))
+		return
+	}
+
 	if err := ctx.Req.ParseForm(); err != nil {
 		panic(err)
 	}

@@ -46,6 +46,12 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/news_image", "newsId", "key", "pn", "stat"))
+		return
+	}
+
 	tx, err := app.Db.Begin()
 	if err != nil {
 		panic(err)
@@ -73,7 +79,6 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 
 	ctx.Msg.Success(ctx.T("Record has been deleted."))
 	ctx.Redirect(ctx.U("/news_image", "newsId", "key", "pn", "stat"))
-
 }
 
 func deleteConfirm(ctx *context.Ctx, rec *news_image_lib.NewsImageRec) {

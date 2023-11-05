@@ -35,10 +35,10 @@ func Browse(rw http.ResponseWriter, req *http.Request) {
 	ctx.Js.Add("/asset/js/page/help_image/help_image.js")
 
 	lmenu := left_menu.New()
-	lmenu.Set(ctx, "help")
+	lmenu.Set(ctx)
 
 	tmenu := top_menu.New()
-	tmenu.Set(ctx)
+	tmenu.Set(ctx, "help")
 
 	str := "helpImagePage"
 

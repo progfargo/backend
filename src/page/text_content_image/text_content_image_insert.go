@@ -52,6 +52,12 @@ func Insert(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/text_content_image", "textId", "key", "pn", "stat"))
+		return
+	}
+
 	err = ctx.Req.ParseMultipartForm(1024 * 1024 * 2)
 	if err != nil {
 		panic(err)

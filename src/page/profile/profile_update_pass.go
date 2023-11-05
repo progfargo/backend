@@ -36,6 +36,12 @@ func UpdatePass(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/profile"))
+		return
+	}
+
 	curPassword := ctx.Req.PostFormValue("curPassword")
 	newPassword := ctx.Req.PostFormValue("newPassword")
 	reNewPassword := ctx.Req.PostFormValue("reNewPassword")

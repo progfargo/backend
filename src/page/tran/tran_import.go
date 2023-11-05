@@ -34,6 +34,12 @@ func Import(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/tran", "key", "pn"))
+		return
+	}
+
 	err := ctx.Req.ParseMultipartForm(1024 * 1024 * 2)
 	if err != nil {
 		panic(err)

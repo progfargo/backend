@@ -45,6 +45,12 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/news", "key", "stat", "pn"))
+		return
+	}
+
 	tx, err := app.Db.Begin()
 	if err != nil {
 		panic(err)

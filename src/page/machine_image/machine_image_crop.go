@@ -51,11 +51,6 @@ func CropImage(rw http.ResponseWriter, req *http.Request) {
 		panic(err)
 	}
 
-	if !ctx.IsRight("machine", "update") {
-		http.Error(rw, ctx.T("You don't have right to access this record."), 401)
-		return
-	}
-
 	var landscape bool
 	if rec.ImgWidth > rec.ImgHeight {
 		landscape = true
@@ -63,6 +58,12 @@ func CropImage(rw http.ResponseWriter, req *http.Request) {
 
 	if ctx.Req.Method == "GET" {
 		cropImageForm(ctx, rec)
+		return
+	}
+
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/machine_image", "machineId"))
 		return
 	}
 

@@ -25,6 +25,12 @@ func Sync(rw http.ResponseWriter, req *http.Request) {
 	ctx.Cargo.AddInt("pn", 1)
 	ctx.ReadCargo()
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/tran", "key", "pn"))
+		return
+	}
+
 	var tranList map[string]bool
 
 	dirList := []string{app.Ini.HomeDir + "/src",

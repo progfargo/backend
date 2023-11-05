@@ -45,6 +45,12 @@ func Update(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/news", "key", "stat", "pn"))
+		return
+	}
+
 	recordDateStr := ctx.Req.PostFormValue("recordDate")
 	recordDate, err := util.DateStrToInt64(recordDateStr)
 	if err != nil {

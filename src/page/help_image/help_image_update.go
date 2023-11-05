@@ -65,6 +65,12 @@ func UpdateImage(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/help_image", "helpId", "key", "pn"))
+		return
+	}
+
 	err = ctx.Req.ParseMultipartForm(1024 * 1024 * 2)
 	if err != nil {
 		panic(err)
@@ -195,7 +201,6 @@ func updateImageForm(ctx *context.Ctx, helpRec *help_lib.HelpRec, imgRec *help_i
 	buf.Add("<label class=\"required\">%s</label>", ctx.T("Image:"))
 	buf.Add("<input type=\"file\" name=\"image\" class=\"formControl\"" +
 		" tabindex=\"1\" autofocus>")
-	buf.Add("<span class=\"helpBlock\">%s 970/546 %s</span>", ctx.T("Image size must be:"), ctx.T("(w/h)"))
 	buf.Add("</div>")
 
 	buf.Add("<div class=\"formGroup formCommand\">")
@@ -214,10 +219,10 @@ func updateImageForm(ctx *context.Ctx, helpRec *help_lib.HelpRec, imgRec *help_i
 	content.Include(ctx)
 
 	lmenu := left_menu.New()
-	lmenu.Set(ctx, "help")
+	lmenu.Set(ctx)
 
 	tmenu := top_menu.New()
-	tmenu.Set(ctx)
+	tmenu.Set(ctx, "help")
 
 	ctx.Render("default.html")
 }

@@ -27,6 +27,12 @@ func Insert(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/social"))
+		return
+	}
+
 	link := ctx.Req.PostFormValue("link")
 	title := ctx.Req.PostFormValue("title")
 	target := ctx.Req.PostFormValue("target")

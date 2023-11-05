@@ -59,6 +59,12 @@ func UpdateImageInfo(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/news_image", "newsId", "key", "pn", "stat"))
+		return
+	}
+
 	alt := ctx.Req.PostFormValue("alt")
 
 	if alt == "" {

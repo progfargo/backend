@@ -21,11 +21,10 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	ctx.Cargo.AddInt("faqId", -1)
-		ctx.Cargo.AddStr("key", "")
-		ctx.Cargo.AddInt("pn", 1)
+	ctx.Cargo.AddStr("key", "")
+	ctx.Cargo.AddInt("pn", 1)
 	ctx.Cargo.AddStr("confirm", "no")
 	ctx.ReadCargo()
-	
 
 	faqId := ctx.Cargo.Int("faqId")
 	rec, err := faq_lib.GetFaqRec(faqId)
@@ -41,6 +40,12 @@ func Delete(rw http.ResponseWriter, req *http.Request) {
 
 	if ctx.Cargo.Str("confirm") != "yes" {
 		deleteConfirm(ctx, rec)
+		return
+	}
+
+	if app.Ini.AppType == "demo" && !ctx.IsSuperuser() {
+		ctx.Msg.Warning(ctx.T("This function is not permitted in demo mode."))
+		ctx.Redirect(ctx.U("/faq", "key", "pn"))
 		return
 	}
 
