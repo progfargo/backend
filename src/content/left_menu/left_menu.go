@@ -47,7 +47,7 @@ func (lm *leftMenu) Set(ctx *context.Ctx, name ...string) {
 
 	lm.Add("machine", "root", 30, ctx.IsRight("machine", "browse"), ctx.U("/machine"),
 		ctx.T("Machines"), "fas fa-list")
-	lm.Add("manufacturer", "machine", 10, ctx.IsRight("manufacturer", "browse_own"), ctx.U("/manufacturer"),
+	lm.Add("manufacturer", "machine", 10, ctx.IsRight("manufacturer", "browse"), ctx.U("/manufacturer"),
 		ctx.T("Manufacturers"), "fas fa-copyright")
 
 	lm.Add("content", "root", 50, ctx.IsRight("news", "browse"), ctx.U("/news"), ctx.T("Content"), "fas fa-code")

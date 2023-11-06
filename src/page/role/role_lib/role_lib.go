@@ -249,6 +249,30 @@ func SetRoleRightList(ctx *context.Ctx) {
 	tab.Add(app.NewRight("faq", "delete", ctx.T("Can delete faq records.")))
 	rl.Add("faq", tab)
 
+	//social
+	tab = app.NewRightTab("Social Links")
+	tab.Add(app.NewRight("social", "browse", ctx.T("Can browse social link records.")))
+	tab.Add(app.NewRight("social", "insert", ctx.T("Can insert social link records.")))
+	tab.Add(app.NewRight("social", "update", ctx.T("Can update social link records.")))
+	tab.Add(app.NewRight("social", "delete", ctx.T("Can delete social link records.")))
+	rl.Add("social", tab)
+
+	//jumbotron
+	tab = app.NewRightTab("Jumbotron")
+	tab.Add(app.NewRight("jumbotron", "browse", ctx.T("Can browse jumbotron records.")))
+	tab.Add(app.NewRight("jumbotron", "insert", ctx.T("Can insert jumbotron records.")))
+	tab.Add(app.NewRight("jumbotron", "update", ctx.T("Can update jumbotron records.")))
+	tab.Add(app.NewRight("jumbotron", "delete", ctx.T("Can delete jumbotron records.")))
+	rl.Add("jumbotron", tab)
+
+	//office
+	tab = app.NewRightTab("Offices")
+	tab.Add(app.NewRight("office", "browse", ctx.T("Can browse office records.")))
+	tab.Add(app.NewRight("office", "insert", ctx.T("Can insert office records.")))
+	tab.Add(app.NewRight("office", "update", ctx.T("Can update office records.")))
+	tab.Add(app.NewRight("office", "delete", ctx.T("Can delete office records.")))
+	rl.Add("office", tab)
+
 	//text content
 	tab = app.NewRightTab("Text Content")
 	tab.Add(app.NewRight("text_content", "browse", ctx.T("Can browse text content records.")))
@@ -268,11 +292,19 @@ func SetRoleRightList(ctx *context.Ctx) {
 
 	//machine
 	tab = app.NewRightTab("Machine")
-	tab.Add(app.NewRight("machine", "browse", ctx.T("Can browse own machine records.")))
+	tab.Add(app.NewRight("machine", "browse", ctx.T("Can browse machine records.")))
 	tab.Add(app.NewRight("machine", "insert", ctx.T("Can insert machine records.")))
-	tab.Add(app.NewRight("machine", "update", ctx.T("can update own machine records.")))
-	tab.Add(app.NewRight("machine", "delete", ctx.T("Can delete own machine records.")))
+	tab.Add(app.NewRight("machine", "update", ctx.T("can update machine records.")))
+	tab.Add(app.NewRight("machine", "delete", ctx.T("Can delete machine records.")))
 	rl.Add("machine", tab)
+
+	//category
+	tab = app.NewRightTab("Category")
+	tab.Add(app.NewRight("category", "browse", ctx.T("Can browse category records.")))
+	tab.Add(app.NewRight("category", "insert", ctx.T("Can insert category records.")))
+	tab.Add(app.NewRight("category", "update", ctx.T("can update category records.")))
+	tab.Add(app.NewRight("category", "delete", ctx.T("Can delete category records.")))
+	rl.Add("category", tab)
 
 	app.UserRightMap = app.UserRightList.GetRightMap() //to set AppRightMap
 }
